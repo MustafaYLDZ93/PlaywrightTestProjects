@@ -41,7 +41,6 @@ test.describe('Login Tests', () => {
         await page.click('.bm-burger-button');
         await page.waitForSelector('#logout_sidebar_link');
         await page.click('#logout_sidebar_link');
-        await page.waitForTimeout(1000);
 
     });
 
@@ -55,7 +54,6 @@ test.describe('Login Tests', () => {
         // Hata mesajının göründüğünü kontrol et
         await page.waitForSelector('.error-button');
         const errorMessageDataTest = await page.locator('[data-test="error"]');
-        await page.waitForTimeout(1000);
-        expect(await errorMessageDataTest.textContent()).toContain('Ussername and password do not match any user in this service');
+        expect(await errorMessageDataTest.textContent()).toContain('Username and password do not match any user in this service');
     });
 });
