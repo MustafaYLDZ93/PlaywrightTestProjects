@@ -32,7 +32,4 @@ test('test', async () => {
     await page.locator('li').filter({ hasText: 'GitHub repo' }).nth(2).click();
     await expect(page.getByRole('article')).toContainText('Documentation');
 
-
-
-
 });

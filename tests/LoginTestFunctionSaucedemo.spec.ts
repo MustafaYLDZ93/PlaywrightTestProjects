@@ -6,7 +6,7 @@ test.describe('Login Tests', () => {
 
     test.beforeAll(async () => {
         // Tarayıcıyı başlat
-        browser = await chromium.launch({ headless: true });
+        browser = await chromium.launch({ headless: false });
 
         // Yeni bir sayfa oluştur
         page = await browser.newPage();
@@ -55,5 +55,7 @@ test.describe('Login Tests', () => {
         await page.waitForSelector('.error-button');
         const errorMessageDataTest = await page.locator('[data-test="error"]');
         expect(await errorMessageDataTest.textContent()).toContain('Username and password do not match any user in this service');
+        await page.waitForTimeout(1000);
+
     });
 });
