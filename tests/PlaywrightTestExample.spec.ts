@@ -1,7 +1,7 @@
 import {test, expect, chromium} from '@playwright/test';
 
 test('test', async () => {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto('https://playwright.dev/');
     await expect(page.getByRole('banner')).toContainText('Playwright enables reliable end-to-end testing for modern web apps.Get startedStar62k+');

@@ -6,7 +6,7 @@ test.describe('Login Tests', () => {
 
     test.beforeAll(async () => {
         // Tarayıcıyı başlat
-        browser = await chromium.launch({ headless: false });
+        browser = await chromium.launch({ headless: true });
 
         // Yeni bir sayfa oluştur
         page = await browser.newPage();
