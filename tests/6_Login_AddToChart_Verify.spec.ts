@@ -1,5 +1,20 @@
 import { test, expect, chromium } from '@playwright/test';
 
+// Login işlemini gerçekleştiren fonksiyon
+async function loginPage(page: any) {
+    await page.fill("#user-name", "standard_user");
+    await page.fill("#password", "secret_sauce");
+    await page.locator("#login-button").click();
+}
+
+//checkout sayfasındaki bilgileri dolduran fonksiyon
+async function checkoutPage(page: any) {
+    await page.fill("#first-name", "Mustafa")
+    await page.fill("#last-name", "Yıldız")
+    await page.fill("#postal-code", "34490")
+    await page.locator("#continue").click()
+
+}
 test.describe.serial('Data Verify and Add To Cart Tests', () => {
     let browser: any;
     let page: any;
@@ -18,22 +33,6 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
 
         await browser.close();
     });
-
-    // Login işlemini gerçekleştiren fonksiyon
-    async function loginPage(page: any) {
-        await page.fill("#user-name", "standard_user");
-        await page.fill("#password", "secret_sauce");
-        await page.locator("#login-button").click();
-    }
-
-    //checkout sayfasındaki bilgileri dolduran fonksiyon
-    async function checkoutPage(page: any) {
-        await page.fill("#first-name", "Mustafa")
-        await page.fill("#last-name", "Yıldız")
-        await page.fill("#postal-code", "34490")
-        await page.locator("#continue").click()
-
-    }
 
     test('Data Verify item', async () => {
         await loginPage(page);
@@ -55,7 +54,7 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         expect(InventoryItemName0).toBe('Sauce Labs Backpack');
         const InventoryItemPrice0 = await InventoryItem0.locator(inventory_item_price).textContent();
         expect(InventoryItemPrice0).toBe('$29.99');
-        const imageInventoryItem0 = page.locator(inventory_item_img).first();
+        const imageInventoryItem0 = await page.locator(inventory_item_img).first();
         const dataTestValue0 = await imageInventoryItem0.getAttribute('data-test');
         expect(dataTestValue0).toBe('inventory-item-sauce-labs-backpack-img');
 
@@ -69,6 +68,7 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         }
 
         const InventoryItem1 = await page.locator(inventory_item).nth(1);
+
         const InventoryItemName1 = await InventoryItem1.locator(inventory_item_name).textContent();
         expect(InventoryItemName1).toBe('Sauce Labs Bike Light');
         const InventoryItemPrice1 = await InventoryItem1.locator(inventory_item_price).textContent();
@@ -144,6 +144,8 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         const imageInventoryItem5 = page.locator(inventory_item_img).nth(5);
         const dataTestValue5 = await imageInventoryItem5.getAttribute('data-test');
         expect(dataTestValue5).toBe('inventory-item-test.allthethings()-t-shirt-(red)-img');
+        expect(dataTestValue5).toEqual('inventory-item-test.allthethings()-t-shirt-(red)-img')
+        expect(dataTestValue5).toContain('inventory-item-test.allthethings()-t-shirt-(red)-img')
 
         if (inventoryItemCount > 5) {
             await page.locator(add_to_cart_item5).click();
@@ -184,7 +186,7 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         await expect(page.locator("div[data-test = 'complete-text']")).toHaveText("Your order has been dispatched, and will arrive just as fast as the pony can get there!")
         await page.locator("#back-to-products").click()
         await expect(page).toHaveURL(/inventory\.html/);
-        
+
         await page.locator("#react-burger-menu-btn").click()
         await expect(page.locator("nav.bm-item-list")).toBeVisible()
         await page.locator("#logout_sidebar_link").click()

@@ -10,14 +10,18 @@ test.describe('Login Tests', () => {
 
         // Yeni bir sayfa oluştur
         page = await browser.newPage();
+        await page.goto('https://www.saucedemo.com/');
     });
 
-    test.beforeEach(async () => {
-        // Saucedemo web sitesine gidin
-        await page.goto('https://www.saucedemo.com');
+    test.afterAll(async () => {
+        // Tarayıcıyı kapat
+        await page.waitForTimeout(1000);
+        await browser.close();
     });
 
-    test('Tüm ürünleri sepete ekleme doğrulama', async () => {
+
+
+test('Tüm ürünleri sepete ekleme doğrulama', async () => {
         // Kullanıcı adını ve şifreyi girin
         const username = 'standard_user';
         const password = 'secret_sauce';
@@ -55,10 +59,5 @@ test.describe('Login Tests', () => {
 
         }
     });
-
-    test.afterAll(async () => {
-        // Tarayıcıyı kapat
-        await page.waitForTimeout(1000);
-        await browser.close();
-    });
 });
+
