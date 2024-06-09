@@ -61,8 +61,8 @@ test.describe('Login Tests', () => {
                 const cartProductPrice = await page.locator(".inventory_item_price").textContent();
 
                 // Ürün bilgilerinin aynı olduğunu doğrula
-                await expect(productName).toBe(cartProductName);
-                await expect(productPrice).toBe(cartProductPrice);
+                expect(productName).toBe(cartProductName);
+                expect(productPrice).toBe(cartProductPrice);
 
                 // Menüden çıkış yap
                 const menuButton = page.locator(".bm-burger-button");
