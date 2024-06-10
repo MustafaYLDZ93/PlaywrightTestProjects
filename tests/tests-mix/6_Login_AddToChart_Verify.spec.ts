@@ -162,12 +162,12 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         const cartItems = page.locator('.cart_item');
         await expect(cartItems).toHaveCount(6);
         await page.locator("#checkout").click()
-        
+
 
     });
     test('Checkout Step 1', async () => {
         await checkoutPage(page);
-        
+
     });
     test('Checkout Step 2', async () => {
         await expect(page.locator("div[data-test='payment-info-value']")).toHaveText("SauceCard #31337")
@@ -193,5 +193,5 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         await expect(page).toHaveURL('https://www.saucedemo.com/')
 
     });
-    
+
 });

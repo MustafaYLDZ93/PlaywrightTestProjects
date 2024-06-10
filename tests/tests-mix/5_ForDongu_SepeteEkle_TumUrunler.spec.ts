@@ -6,7 +6,7 @@ test.describe('Login Tests', () => {
 
     test.beforeAll(async () => {
         // Tarayıcıyı başlat
-        browser = await chromium.launch({ headless: true });
+        browser = await chromium.launch({});
 
         // Yeni bir sayfa oluştur
         page = await browser.newPage();
@@ -15,13 +15,10 @@ test.describe('Login Tests', () => {
 
     test.afterAll(async () => {
         // Tarayıcıyı kapat
-        await page.waitForTimeout(1000);
         await browser.close();
     });
 
-
-
-test('Tüm ürünleri sepete ekleme doğrulama', async () => {
+    test('Tüm ürünleri sepete ekleme doğrulama', async () => {
         // Kullanıcı adını ve şifreyi girin
         const username = 'standard_user';
         const password = 'secret_sauce';
@@ -53,11 +50,9 @@ test('Tüm ürünleri sepete ekleme doğrulama', async () => {
             const cartBadge = await page.locator('.shopping_cart_badge');
             await expect(cartBadge).toHaveText(`${i}`);
 
-
             // Sayfaya geri dönün
             await page.goBack();
 
         }
     });
 });
-
