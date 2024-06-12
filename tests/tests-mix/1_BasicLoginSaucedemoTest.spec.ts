@@ -1,7 +1,7 @@
 import {test, expect, chromium} from '@playwright/test';
 
-test('test', async () => {
-    const browser = await chromium.launch({ headless: true });
+test('test',  async () => {
+    const browser = await chromium.launch({headless: true});
     const page = await browser.newPage();
     await page.goto('https://www.saucedemo.com/');
     await page.locator('[data-test="username"]').click();

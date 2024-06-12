@@ -1,10 +1,10 @@
 import { Page } from '@playwright/test';
 
 export class InventoryPage {
-    page: Page;
-    productLabel = '.product_label';
-    burgerButton = '.bm-burger-button';
-    logoutLink = '#logout_sidebar_link';
+    private page: Page;
+    private productLabel = '.product_label';
+    private burgerButton = '.bm-burger-button';
+    private logoutLink = '#logout_sidebar_link';
 
     constructor(page: Page) {
         this.page = page;

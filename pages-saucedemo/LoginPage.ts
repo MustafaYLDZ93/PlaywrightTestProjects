@@ -3,10 +3,10 @@ import { Page } from '@playwright/test';
 
 export class LoginPage {
     page: Page;
-    usernameInput = '#user-name';
-    passwordInput = '#password';
-    loginButton = '#login-button';
-    errorMessage = '[data-test="error"]';
+    private usernameInput = '#user-name';
+    private passwordInput = '#password';
+    private loginButton = '#login-button';
+    private errorMessage = '[data-test="error"]';
 
     constructor(page: Page) {
         this.page = page;
@@ -22,6 +22,9 @@ export class LoginPage {
 
     async clickLoginButton() {
         await this.page.click(this.loginButton);
+    }
+    async waitForErrorMessage() {
+        await this.page.waitForSelector(this.errorMessage, { state: 'visible' });
     }
 
     async getErrorMessage(): Promise<string> {

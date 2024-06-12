@@ -35,7 +35,7 @@ test.describe('SauceDemo Tests', () => {
         await loginPage.clickLoginButton();
 
         // Hata mesajının göründüğünü kontrol et
-        await page.waitForSelector(loginPage.errorMessage, { state: 'visible' });
+        await loginPage.waitForErrorMessage()
         const errorMessageText = await loginPage.getErrorMessage();
         expect(errorMessageText).toBe('Epic sadface: Username and password do not match any user in this service');
     });
