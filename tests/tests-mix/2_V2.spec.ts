@@ -1,4 +1,4 @@
-import { test, expect, chromium } from '@playwright/test';
+import { test, expect, } from '@playwright/test';
 
 const testUsers = [
     { username: 'standard_user', password: 'secret_sauce' },
@@ -6,9 +6,9 @@ const testUsers = [
 ];
 
 test.describe('Login Tests', () => {
-    test.beforeEach( ({ page }) => {
+    test.beforeEach( async ({ page }) => {
         // Her testten önce Saucedemo web sitesine gidin
-         page.goto('https://www.saucedemo.com');
+         await page.goto('https://www.saucedemo.com');
     });
 
     test('Belirli sayıda ürünü sepete ekleme doğrulama', async ({ page }) => {
@@ -62,10 +62,10 @@ test.describe('Login Tests', () => {
             } else {
                 // Hata mesajını kontrol et
                 const errorMessage = page.locator('[data-test="error"]');
-                 expect(errorMessage).toBeVisible();
-                 expect(errorMessage).toHaveText(
-                    'Epic sadface: Username and password do not match any user in this service'
-                );
+                 await expect(errorMessage).toBeVisible();
+                 await expect(errorMessage).toHaveText(
+                     'Epic sadface: Username and password do not match any user in this service'
+                 );
             }
         }
     });

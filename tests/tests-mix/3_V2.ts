@@ -19,7 +19,7 @@ test.describe.serial('Login Tests', () => {
         await login(page, 'standard_user', 'secret_sauce');
 
         // Girişin başarılı olduğunu kontrol et
-        const productLabel = await page.locator('.product_label');
+        const productLabel = page.locator('.product_label');
         expect(await productLabel.textContent()).toContain('Products');
 
         // Logout işlemi
@@ -36,7 +36,7 @@ test.describe.serial('Login Tests', () => {
 
         // Hata mesajının göründüğünü kontrol et
         await page.waitForSelector('.error-button');
-        const errorMessageDataTest = await page.locator('[data-test="error"]');
+        const errorMessageDataTest = page.locator('[data-test="error"]');
         expect(await errorMessageDataTest.textContent()).toContain('Username and password do not match any user in this service');
     });
 });
