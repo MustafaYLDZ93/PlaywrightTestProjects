@@ -1,10 +1,11 @@
 import { Page } from '@playwright/test';
+import { selectors } from '../fixtures-Saucedemo/selectors';
 
 export class InventoryPage {
     private page: Page;
-    private productLabel = '.product_label';
-    private burgerButton = '.bm-burger-button';
-    private logoutLink = '#logout_sidebar_link';
+    private productLabel = selectors.productLabelSelector;
+    private burgerButton = selectors.burgerButtonSelector;
+    private logoutLink = selectors.logoutSidebarLink;
 
     constructor(page: Page) {
         this.page = page;

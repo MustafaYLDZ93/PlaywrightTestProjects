@@ -1,4 +1,7 @@
-import { test, expect, chromium } from '@playwright/test';
+import {test, expect, chromium, Page} from '@playwright/test';
+import { selectors } from '../../fixtures-Saucedemo/selectors';
+import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
+
 
 test.describe('Login Tests', () => {
     let browser: any;
@@ -18,17 +21,9 @@ test.describe('Login Tests', () => {
     });
 
     test('Belirli sayıda ürünü sepete ekleme doğrulama', async () => {
-        // Kullanıcı adını ve şifreyi girin
-        const username = 'standard_user';
-        const password = 'secret_sauce';
 
-        // Kullanıcı girişi yapın
-        await page.fill('#user-name', username);
-        await page.fill('#password', password);
-        await page.click('#login-button');
-
-        // Kullanıcının giriş yaptığından emin olun
-        const productLabel = page.locator("[data-test='title']");
+        await ValidLoginPage(page);
+        const productLabel = page.locator(selectors.productLabelText);
         await expect(productLabel).toHaveText('Products');
 
         // Belirli sayıda ürün sepete ekleme
@@ -43,10 +38,11 @@ test.describe('Login Tests', () => {
             await expect(page).toHaveURL(/\/inventory-item\.html/);
 
             // Sepete ekle butonuna tıklayın
-            await page.click('.btn_inventory');
+            await page.click(selectors.buttonAddCart);
+
 
             // Ürünün sepete eklendiğini doğrulayın
-            const cartBadge = page.locator('.shopping_cart_badge');
+            const cartBadge = page.locator(selectors.shoppingCartBadge);
             await expect(cartBadge).toHaveText(`${i}`);
 
             // Sayfaya geri dönün
@@ -54,10 +50,10 @@ test.describe('Login Tests', () => {
         }
 
         // Sepete gidin
-        await page.click('.shopping_cart_link');
+        await page.click(selectors.shoppingCartLink);
 
         // Sepetin içindeki ürün sayısını kontrol edin
-        const cartItems = page.locator('.cart_item');
+        const cartItems = page.locator(selectors.cart_item);
         await expect(cartItems).toHaveCount(3);
 
     });

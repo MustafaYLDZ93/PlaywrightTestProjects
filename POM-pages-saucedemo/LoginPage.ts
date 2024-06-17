@@ -1,12 +1,14 @@
 import { Page } from '@playwright/test';
+import { loginSelectors } from '../fixtures-Saucedemo/selectors';
+
 
 
 export class LoginPage {
     page: Page;
-    private usernameInput = '#user-name';
-    private passwordInput = '#password';
-    private loginButton = '#login-button';
-    private errorMessage = '[data-test="error"]';
+    private usernameInput = loginSelectors.usernameInputSelector;
+    private passwordInput = loginSelectors.passwordInputSelector;
+    private loginButton = loginSelectors.LoginButton;
+    private errorMessage = loginSelectors.errorMessageSelector;
 
     constructor(page: Page) {
         this.page = page;

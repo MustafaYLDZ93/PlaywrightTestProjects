@@ -1,4 +1,6 @@
 import { test, expect, chromium } from '@playwright/test';
+import { selectors } from '../../fixtures-Saucedemo/selectors';
+import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
 
 test.describe('Login Tests', () => {
     let browser: any;
@@ -19,38 +21,17 @@ test.describe('Login Tests', () => {
     });
 
     test('Tüm ürünleri sepete ekleme doğrulama', async () => {
-        // Kullanıcı adını ve şifreyi girin
-        const username = 'standard_user';
-        const password = 'secret_sauce';
-
-        // Kullanıcı girişi yapın
-        await page.fill('#user-name', username);
-        await page.fill('#password', password);
-        await page.click('#login-button');
-
-        // Ürün sayısını al
-        const urunler = await page.locator('.inventory_item').elementHandles();
+        await ValidLoginPage(page);
+        const urunler = await page.locator(selectors.inventoryItem).elementHandles();
         const urun_sayisi = urunler.length;
 
-        // for döngüsü ile ürünleri sepete ekle
         for (let i = 1; i <= urun_sayisi; i++) {
-            // Ürün adını alın
             const productNameElement = await page.locator(`.inventory_item:nth-child(${i}) .inventory_item_name`);
-
-            // Ürüne tıklayın
             await productNameElement.click();
-
-            // Seçilen ürünün detay sayfasında olduğunu doğrulayın
             await expect(page).toHaveURL(/\/inventory-item\.html/);
-
-            // Sepete ekle butonuna tıklayın
-            await page.click('.btn_inventory');
-
-            // Ürünün sepete eklendiğini doğrulayın
-            const cartBadge = await page.locator('.shopping_cart_badge');
+            await page.click(selectors.buttonAddCart);
+            const cartBadge = await page.locator(selectors.shoppingCartBadge);
             await expect(cartBadge).toHaveText(`${i}`);
-
-            // Sayfaya geri dönün
             await page.goBack();
 
         }

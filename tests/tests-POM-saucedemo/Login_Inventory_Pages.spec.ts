@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages-saucedemo/LoginPage';
-import { InventoryPage } from '../../pages-saucedemo/InventoryPage';
+import { LoginPage } from '../../POM-pages-saucedemo/LoginPage';
+import { InventoryPage } from '../../POM-pages-saucedemo/InventoryPage';
 
 test.describe('SauceDemo Tests', () => {
     let loginPage: LoginPage;
