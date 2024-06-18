@@ -126,7 +126,8 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         // Oturumu kapat
         await page.locator("#react-burger-menu-btn").click();
         await expect(page.locator("nav.bm-item-list")).toBeVisible();
-        await page.locator("#logout_sidebar_link").click();
+        const logout = page.locator("[data-test = 'logout-sidebar-link']")
+        await logout.click()
         await expect(page).toHaveURL('https://www.saucedemo.com/');
     });
 });

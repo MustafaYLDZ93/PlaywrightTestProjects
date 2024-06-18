@@ -9,7 +9,7 @@ test.describe('SauceDemo Tests', () => {
     test.beforeEach(async ({ page }) => {
         loginPage = new LoginPage(page);
         inventoryPage = new InventoryPage(page);
-        await page.goto('https://www.saucedemo.com/v1/index.html');
+        await page.goto('https://www.saucedemo.com/');
     });
 
     test('valid login', async ({ page }) => {
@@ -17,8 +17,6 @@ test.describe('SauceDemo Tests', () => {
         await loginPage.enterPassword('secret_sauce');
         await loginPage.clickLoginButton();
 
-        // Girişin başarılı olduğunu kontrol et
-        await expect(page).toHaveURL(/\/v1\/inventory.html/);
 
         await inventoryPage.waitForPageLoad();
         const productLabelText = await inventoryPage.getProductLabelText();

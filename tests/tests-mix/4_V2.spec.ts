@@ -9,9 +9,7 @@ test.describe('Login Tests', () => {
         const productLabel = page.locator(selectors.productLabelText);
         await expect(productLabel).toHaveText('Products');
 
-        // Belirli sayıda ürün sepete ekleme
         for (let i = 1; i <= 3; i++) {
-            // Ürün adını alın
             const productNameElement = page.locator(`.inventory_item:nth-child(${i}) .inventory_item_name`);
             await productNameElement.click();
             await expect(page).toHaveURL(/\/inventory-item\.html/);

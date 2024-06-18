@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { selectors } from '../../fixtures-Saucedemo/selectors';
 import { inventoryItems } from '../../fixtures-Saucedemo/inventoryItems';
 import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
@@ -66,7 +66,8 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         // Oturumu kapat
         await page.locator(selectors.burgerMenuButton).click();
         await expect(page.locator(selectors.navMenuItemList)).toBeVisible();
-        await page.locator(selectors.logoutSidebarLink).click();
+        const logout = page.locator(selectors.logoutSidebarLink)
+        await logout.click()
         await expect(page).toHaveURL('https://www.saucedemo.com/');
     });
 });

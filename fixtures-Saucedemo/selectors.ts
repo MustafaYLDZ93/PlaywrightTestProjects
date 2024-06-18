@@ -9,6 +9,7 @@ export const loginSelectors = {
 };
 
 export const selectors = {
+    inventoryContainer: '[data-test="inventory-container"]',
     checkoutFirstName: '#first-name',
     checkoutLastName: '#last-name',
     checkoutPostalCode: '#postal-code',
@@ -33,9 +34,8 @@ export const selectors = {
     backToProductsButton: "#back-to-products",
     burgerMenuButton: "#react-burger-menu-btn",
     navMenuItemList:"nav.bm-item-list",
-    productLabelSelector: '.product_label',
     burgerButtonSelector: '.bm-burger-button',
-    logoutSidebarLink: "#logout_sidebar_link",
+    logoutSidebarLink: "[data-test = 'logout-sidebar-link']",
     buttonAddCart:".btn_primary",
     add_to_cart_item0 : '#add-to-cart-sauce-labs-backpack',
     add_to_cart_item1 : '#add-to-cart-sauce-labs-bike-light',
@@ -43,6 +43,5 @@ export const selectors = {
     add_to_cart_item3 : '#add-to-cart-sauce-labs-fleece-jacket',
     add_to_cart_item4 : '#add-to-cart-sauce-labs-onesie',
     add_to_cart_item5 : "xpath=//*[@id='add-to-cart-test.allthethings()-t-shirt-(red)']",
-
+    
 };
-

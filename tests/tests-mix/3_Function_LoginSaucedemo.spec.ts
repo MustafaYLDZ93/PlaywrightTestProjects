@@ -13,7 +13,7 @@ test.describe.serial('Login Tests', () => {
 
         // Yeni bir sayfa oluştur
         page = await browser.newPage();
-        await page.goto('https://www.saucedemo.com/v1/index.html');
+        await page.goto('https://www.saucedemo.com/');
     });
 
     test.afterAll(async () => {
@@ -28,9 +28,8 @@ test.describe.serial('Login Tests', () => {
         await ValidInvalidLoginPage(page, loginSelectors.username, loginSelectors.password);
 
         // Girişin başarılı olduğunu kontrol et
-        const productLabel = await page.locator(selectors.productLabelSelector);
-        expect(await productLabel.textContent()).toContain('Products');
-
+        const productLabel = page.locator(selectors.productLabelText);
+        await expect(productLabel).toHaveText('Products');
         // Logout işlemi
         await page.click(selectors.burgerButtonSelector);
         await page.waitForSelector(selectors.logoutSidebarLink);

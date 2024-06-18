@@ -3,7 +3,7 @@ import { selectors } from '../fixtures-Saucedemo/selectors';
 
 export class InventoryPage {
     private page: Page;
-    private productLabel = selectors.productLabelSelector;
+    private productLabel = selectors.productLabelText;
     private burgerButton = selectors.burgerButtonSelector;
     private logoutLink = selectors.logoutSidebarLink;
 

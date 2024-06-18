@@ -1,4 +1,4 @@
-import { test, expect, chromium, Page} from '@playwright/test';
+import { test, expect} from '@playwright/test';
 import { selectors } from '../../fixtures-Saucedemo/selectors';
 import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
 import { checkoutPage} from '../../CustomCommands/checkoutPageCustomCommand';
