@@ -1,7 +1,7 @@
 import { test, expect} from '@playwright/test';
-import { selectors } from '../../fixtures-Saucedemo/selectors';
-import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
-import { checkoutPage} from '../../CustomCommands/checkoutPageCustomCommand';
+import { selectors } from '../../../../Downloads/PlaywrightTestProjects-main/fixtures-Saucedemo/selectors';
+import { ValidLoginPage} from '../../../../Downloads/PlaywrightTestProjects-main/CustomCommands/LoginPageCustomCommands';
+import { checkoutPage} from '../../../../Downloads/PlaywrightTestProjects-main/CustomCommands/checkoutPageCustomCommand';
 
 
 test.describe.serial('Data Verify and Add To Cart Tests', () => {

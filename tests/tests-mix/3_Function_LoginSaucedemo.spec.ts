@@ -2,7 +2,6 @@ import { test, expect, chromium } from '@playwright/test';
 import { loginSelectors, selectors } from '../../fixtures-Saucedemo/selectors';
 import { ValidInvalidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
 
-
 test.describe.serial('Login Tests', () => {
     let browser: any;
     let page: any;
