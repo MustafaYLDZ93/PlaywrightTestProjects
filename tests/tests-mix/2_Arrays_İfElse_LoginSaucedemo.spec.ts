@@ -71,7 +71,7 @@ test.describe('Login Tests', () => {
                 await page.waitForTimeout(1000);
 
                 const logoutButton = page.locator(selectors.logoutSidebarLink);
-                await logoutButton.click();
+
             } else {
                 // Hata mesajını kontrol et
                 const errorMessage = page.locator(loginSelectors.errorMessageSelector);

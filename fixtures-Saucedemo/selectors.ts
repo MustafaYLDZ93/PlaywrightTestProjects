@@ -45,3 +45,5 @@ export const selectors = {
     add_to_cart_item5 : "xpath=//*[@id='add-to-cart-test.allthethings()-t-shirt-(red)']",
     
 };
+
+

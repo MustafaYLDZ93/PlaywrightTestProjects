@@ -6,7 +6,7 @@ import { checkoutPage} from '../../CustomCommands/checkoutPageCustomCommand';
 
 
 test.describe.serial('Data Verify and Add To Cart Tests', () => {
-    test('Data Verify item', async ({ page }) => {
+    test('Data Verify item @data-verify', async ({ page }) => {
         await page.goto('https://www.saucedemo.com/');
         // Giriş yapma fonksiyonunu çağır
         await ValidLoginPage(page);
@@ -69,5 +69,6 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
         const logout = page.locator(selectors.logoutSidebarLink)
         await logout.click()
         await expect(page).toHaveURL('https://www.saucedemo.com/');
-    });
+    })
+    
 });

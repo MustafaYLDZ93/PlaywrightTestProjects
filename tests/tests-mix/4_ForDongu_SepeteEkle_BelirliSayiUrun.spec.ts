@@ -55,7 +55,6 @@ test.describe('Login Tests', () => {
         // Sepetin içindeki ürün sayısını kontrol edin
         const cartItems = page.locator(selectors.cart_item);
         await expect(cartItems).toHaveCount(3);
-
     });
 
     test.afterAll(async () => {

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { loginSelectors, selectors } from '../../fixtures-Saucedemo/selectors';
+import { selectors } from '../../fixtures-Saucedemo/selectors';
 import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
 
 test.describe('Login Tests', () => {

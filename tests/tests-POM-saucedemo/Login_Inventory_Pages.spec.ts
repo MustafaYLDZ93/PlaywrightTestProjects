@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../POM-pages-saucedemo/LoginPage';
 import { InventoryPage } from '../../POM-pages-saucedemo/InventoryPage';
 
-test.describe('SauceDemo Tests', () => {
+test.describe('SauceDemo Tests @smoke @logintests ', () => {
     let loginPage: LoginPage;
     let inventoryPage: InventoryPage;
 
@@ -12,7 +12,7 @@ test.describe('SauceDemo Tests', () => {
         await page.goto('https://www.saucedemo.com/');
     });
 
-    test('valid login', async ({ page }) => {
+    test('valid login @validlogin', async ({ page }) => {
         await loginPage.enterUsername('standard_user');
         await loginPage.enterPassword('secret_sauce');
         await loginPage.clickLoginButton();
@@ -27,7 +27,7 @@ test.describe('SauceDemo Tests', () => {
         await inventoryPage.clickLogoutLink();
     });
 
-    test('invalid login', async ({ page }) => {
+    test('invalid login @invalidlogin', async ({ page }) => {
         await loginPage.enterUsername('invaliduser');
         await loginPage.enterPassword('invalidpassword');
         await loginPage.clickLoginButton();
