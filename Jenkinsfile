@@ -56,6 +56,18 @@ pipeline {
             }
         }
 
+        stage('Publish HTML Report') {
+            steps {
+                publishHTML(target: [
+                    reportDir: 'playwright-report',
+                    reportFiles: 'index.html',
+                    reportName: 'Playwright Test Raporu',
+                    keepAll: true,
+                    alwaysLinkToLastBuild: true,
+                    allowMissing: true
+                ])
+            }
+        }
     }
 
     post {
