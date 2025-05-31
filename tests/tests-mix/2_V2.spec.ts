@@ -12,7 +12,7 @@ test.describe('Login Tests', () => {
          await page.goto('https://www.saucedemo.com');
     });
 
-    test('Belirli sayıda ürünü sepete ekleme doğrulama', async ({ page }) => {
+    test('Belirli sayıda ürünü sepete ekleme doğrulama @chart', async ({ page }) => {
         for (const user of testUsers) {
             const usernameInput = page.locator(loginSelectors.usernameInputSelector);
             const passwordInput = page.locator(loginSelectors.passwordInputSelector);
