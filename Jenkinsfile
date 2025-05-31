@@ -56,11 +56,6 @@ pipeline {
             }
         }
 
-        stage('Publish JUnit Report') {
-            steps {
-                junit 'test-results/**/*.xml'
-            }
-        }
     }
 
     post {
