@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'GREP', defaultValue: '', description: 'Çalıştırılacak test etiketi veya başlığı (ör: @validlogin)')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -25,7 +29,13 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                sh 'npx playwright test'
+                script {
+                    if (params.GREP?.trim()) {
+                        sh "npx playwright test --grep '${params.GREP}'"
+                    } else {
+                        sh 'npx playwright test'
+                    }
+                }
             }
         }
         stage('Archive Report') {
