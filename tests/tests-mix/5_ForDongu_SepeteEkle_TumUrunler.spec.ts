@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 import { selectors } from '../../fixtures-Saucedemo/selectors';
 import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
 
-test.describe('Tüm Ürünleri Sepete Ekleme ve Doğrulama', () => {
+test.describe('Tüm Ürünleri Sepete Ekleme ve Doğrulama @chart @chartall', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('https://www.saucedemo.com/');
     });
