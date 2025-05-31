@@ -37,7 +37,7 @@ test('Add to cart and verify with ternary operator', async ({ page }) => {
 });
 
 test('Login test with ternary operator', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/');
+    await page.goto('https://www.saucedemo.com/', {waitUntil: "domcontentloaded"});
 
     // Kullanıcı adı ve şifreyi tanımla
     const username = 'standard_user';

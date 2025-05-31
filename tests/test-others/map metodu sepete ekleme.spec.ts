@@ -4,7 +4,7 @@ test.describe('SauceDemo Product Purchase', () => {
 
     test('Add all products to the cart and verify', async ({ page }) => {
         // Saucedemo giriş sayfasına git
-        await page.goto('https://www.saucedemo.com/');
+        await page.goto('https://www.saucedemo.com/' , {waitUntil: "domcontentloaded"});
 
         // Giriş bilgilerini doldur ve giriş yap
         await page.fill('#user-name', 'standard_user');

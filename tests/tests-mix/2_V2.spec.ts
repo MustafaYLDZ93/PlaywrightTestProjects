@@ -68,4 +68,8 @@ test.describe('Login Tests', () => {
             }
         }
     });
+    test.afterEach(async ({ page }) => {
+        // Her testten sonra tarayıcıyı kapat
+        await page.close();
+    });
 });

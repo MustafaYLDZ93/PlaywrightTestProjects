@@ -1,9 +1,12 @@
 name: Playwright Tests
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      grep:
+        description: 'Çalıştırılacak test etiketi veya başlığı (ör: @validlogin)'
+        required: false
+        default: ''
+
 jobs:
   test:
     timeout-minutes: 60
@@ -17,8 +20,13 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
+    - name: Run Playwright tests (with grep)
+      run: |
+        if [ -z "${{ github.event.inputs.grep }}" ]; then
+          npx playwright test
+        else
+          npx playwright test --grep "${{ github.event.inputs.grep }}"
+        fi
     - uses: actions/upload-artifact@v4
       if: always()
       with:

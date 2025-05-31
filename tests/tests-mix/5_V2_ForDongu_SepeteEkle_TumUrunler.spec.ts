@@ -4,7 +4,7 @@ import { ValidLoginPage} from '../../CustomCommands/LoginPageCustomCommands';
 
 test.describe('Login Tests', () => {
     test('Tüm ürünleri sepete ekleme doğrulama', async ({ page }) => {
-        await page.goto('https://www.saucedemo.com/')
+        await page.goto('https://www.saucedemo.com/', {waitUntil: "domcontentloaded"})
         await ValidLoginPage(page);
 
         const urunler = await page.locator(selectors.inventoryItem).elementHandles();

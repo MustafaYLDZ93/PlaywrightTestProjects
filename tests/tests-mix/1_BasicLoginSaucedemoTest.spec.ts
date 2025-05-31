@@ -1,22 +1,26 @@
 import { test, expect } from '@playwright/test';
+import selectors from '../../fixtures-Saucedemo/selectors2';
 
 test('test', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');
-    await page.locator('[data-test="username"]').click();
-    await page.locator('[data-test="username"]').fill('invaliduser');
-    await page.locator('[data-test="password"]').click();
-    await page.locator('[data-test="password"]').fill('invalidpassword');
-    await page.locator('[data-test="login-button"]').click();
-    await expect(page.locator('[data-test="error"]')).toBeVisible();
-    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
-    await page.locator('[data-test="username"]').click();
-    await page.locator('[data-test="username"]').fill('standard_user');
-    await page.locator('[data-test="password"]').click();
-    await page.locator('[data-test="password"]').fill('secret_sauce');
-    await page.locator('[data-test="login-button"]').click();
-    await expect(page.locator('[data-test="inventory-container"]')).toBeVisible();
-    await expect(page.locator('[data-test="title"]')).toContainText('Products');
-    await page.locator("xpath=//*[@id='react-burger-menu-btn']").click()
-    await page.locator('[data-test="logout-sidebar-link"]').click();
 
+    const login = async (username: string, password: string) => {
+        await page.fill(selectors.username, username);
+        await page.fill(selectors.password, password);
+        await page.click(selectors.loginButton);
+    };
+
+    // Geçersiz kullanıcı adı ve şifre ile giriş yapmayı dene
+    await login('invaliduser', 'invalidpassword');
+    await expect(page.locator(selectors.error)).toBeVisible();
+    await expect(page.locator(selectors.error)).toContainText('Epic sadface: Username and password do not match any user in this service');
+
+    // Geçerli kullanıcı adı ve şifre ile giriş yap
+    await login('standard_user', 'secret_sauce');
+    await expect(page.locator(selectors.inventoryContainer)).toBeVisible();
+    await expect(page.locator(selectors.title)).toContainText('Products');
+
+    // Çıkış yap
+    await page.click(selectors.burgerMenuButton);
+    await page.click(selectors.logoutSidebarLink);
 });

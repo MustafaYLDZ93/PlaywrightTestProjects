@@ -46,7 +46,6 @@ test.describe.serial('Login Tests', () => {
         // Hata mesajının göründüğünü kontrol et
         await page.waitForSelector(loginSelectors.errorButton);
         const errorMessageDataTest = await page.locator(loginSelectors.errorMessageSelector);
-        expect(await errorMessageDataTest.textContent()).toContain('Username and password do not match any user in this service');
-
+        await expect(errorMessageDataTest).toContainText('Username and password do not match any user in this service');
     });
 });

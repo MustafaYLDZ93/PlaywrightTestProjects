@@ -17,7 +17,7 @@ test.describe('Login Tests', () => {
 
     test.beforeEach(async () => {
         // Saucedemo web sitesine gidin
-        await page.goto('https://www.saucedemo.com');
+        await page.goto('https://www.saucedemo.com', {waitUntil: "domcontentloaded"});
     });
 
     test('Belirli sayıda ürünü sepete ekleme doğrulama', async () => {

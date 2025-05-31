@@ -12,7 +12,7 @@ test.describe('SauceDemo Tests @smoke @logintests ', () => {
         await page.goto('https://www.saucedemo.com/');
     });
 
-    test('valid login @validlogin', async ({ page }) => {
+    test('valid login @validlogin', async () => {
         await loginPage.enterUsername('standard_user');
         await loginPage.enterPassword('secret_sauce');
         await loginPage.clickLoginButton();
@@ -27,7 +27,7 @@ test.describe('SauceDemo Tests @smoke @logintests ', () => {
         await inventoryPage.clickLogoutLink();
     });
 
-    test('invalid login @invalidlogin', async ({ page }) => {
+    test('invalid login @invalidlogin', async () => {
         await loginPage.enterUsername('invaliduser');
         await loginPage.enterPassword('invalidpassword');
         await loginPage.clickLoginButton();
@@ -37,4 +37,6 @@ test.describe('SauceDemo Tests @smoke @logintests ', () => {
         const errorMessageText = await loginPage.getErrorMessage();
         expect(errorMessageText).toBe('Epic sadface: Username and password do not match any user in this service');
     });
+
+    
 });

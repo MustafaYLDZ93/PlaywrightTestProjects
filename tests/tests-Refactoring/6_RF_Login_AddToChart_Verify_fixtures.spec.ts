@@ -7,7 +7,7 @@ import { checkoutPage} from '../../CustomCommands/checkoutPageCustomCommand';
 
 test.describe.serial('Data Verify and Add To Cart Tests', () => {
     test('Data Verify item @data-verify', async ({ page }) => {
-        await page.goto('https://www.saucedemo.com/');
+        await page.goto('https://www.saucedemo.com/', { waitUntil: 'domcontentloaded' } );
         // Giriş yapma fonksiyonunu çağır
         await ValidLoginPage(page);
 

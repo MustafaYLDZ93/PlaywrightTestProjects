@@ -14,7 +14,7 @@ test.describe.serial('Data Verify and Add To Cart Tests', () => {
 
         // Yeni bir sayfa oluştur
         page = await browser.newPage();
-        await page.goto('https://www.saucedemo.com/');
+        await page.goto('https://www.saucedemo.com/', {waitUntil: "domcontentloaded"});
 
     });
 
