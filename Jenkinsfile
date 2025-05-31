@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     def grepOption = params.GREP?.trim() ? "--grep '${params.GREP}'" : ""
-                    sh "npx playwright test ${grepOption} --reporter=html,junit --output=test-results"
+                    sh "npx playwright test ${grepOption} --reporter=html,junit:test-results/results.xml"
                 }
             }
         }
@@ -58,7 +58,7 @@ pipeline {
 
         stage('Publish JUnit Report') {
             steps {
-                junit 'test-results/**/*.xml'
+                junit 'test-results/results.xml'
             }
         }
 
