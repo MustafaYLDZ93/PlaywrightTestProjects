@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     def grepOption = params.GREP?.trim() ? "--grep '${params.GREP}'" : ""
-                    sh "npx playwright test ${grepOption}"
+                    sh "npx playwright test ${grepOption} --reporter=html,junit --output=test-results"
                 }
             }
         }
@@ -53,6 +53,12 @@ pipeline {
         stage('Archive Playwright Report') {
             steps {
                 archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+            }
+        }
+
+        stage('Publish JUnit Report') {
+            steps {
+                junit 'test-results/**/*.xml'
             }
         }
 
