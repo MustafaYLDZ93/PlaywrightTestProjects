@@ -2,7 +2,11 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'GREP', defaultValue: '', description: 'Çalıştırılacak test etiketi veya başlığı (ör: @validlogin)')
+        string(name: 'GREP', defaultValue: '', description: 'Çalıştırılacak test etiketi veya başlığı (ör: @login, @validlogin). Boş bırakılırsa tüm testler çalışır.')
+    }
+
+    environment {
+        PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
     }
 
     stages {
@@ -11,42 +15,63 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Install Node.js') {
+
+        stage('Environment Check') {
             steps {
-                // Eğer Node.js yüklü değilse yükleyin
-                sh 'node -v || curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && apt-get install -y nodejs'
+                sh '''
+                    echo "=== PATH ==="
+                    echo $PATH
+                    node --version
+                    npm --version
+                    pwd
+                    ls -la
+                '''
             }
         }
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm ci'
             }
         }
+
         stage('Install Playwright Browsers') {
             steps {
                 sh 'npx playwright install --with-deps'
             }
         }
+
         stage('Run Tests') {
             steps {
                 script {
-                    if (params.GREP?.trim()) {
-                        sh "npx playwright test --grep '${params.GREP}'"
-                    } else {
-                        sh 'npx playwright test'
-                    }
+                    def grepOption = params.GREP?.trim() ? "--grep '${params.GREP}'" : ""
+                    sh "npx playwright test ${grepOption}"
                 }
             }
         }
-        stage('Archive Report') {
+
+        stage('Archive Playwright Report') {
             steps {
                 archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
             }
         }
+
+        stage('Publish JUnit Report') {
+            steps {
+                junit 'test-results/**/*.xml'
+            }
+        }
     }
+
     post {
         always {
-            junit 'test-results/**/*.xml'
+            echo 'Pipeline completed'
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
