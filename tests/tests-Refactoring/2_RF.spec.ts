@@ -27,6 +27,9 @@ test.describe('Login Tests', () => {
 
                 await addToCartButton.click();
 
+                if (productName === null) {
+                    throw new Error('Product name could not be found');
+                }
                 await verifyProductInCart(page, productName, productPrice);
                 await logoutUser(page);
             } else {
