@@ -1,0 +1,91 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'CUCUMBER_TAG', defaultValue: '', description: 'Run tests with this tag (örneğin: @login)')
+    }
+
+    environment {
+        PATH = "/opt/homebrew/bin:/usr/local/bin:$PATH"
+    }
+
+    stages {
+        stage('Use Local Project') {
+            steps {
+                dir('/Users/musti/Desktop/testsWebUI/testsCucumberBDD/cucumber-playwright') {
+                    sh '''
+                        echo "=== Working Directory ==="
+                        pwd
+                        ls -la
+                    '''
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('/Users/musti/Desktop/testsWebUI/testsCucumberBDD/cucumber-playwright') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Install Playwright Browsers') {
+            steps {
+                dir('/Users/musti/Desktop/testsWebUI/testsCucumberBDD/cucumber-playwright') {
+                    sh 'npx playwright install --with-deps'
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                dir('/Users/musti/Desktop/testsWebUI/testsCucumberBDD/cucumber-playwright') {
+                    script {
+                        def tagOption = params.CUCUMBER_TAG?.trim() ? "--tags ${params.CUCUMBER_TAG}" : ""
+                        sh "npx cucumber-js ${tagOption} --format html:cucumber-report.html --format junit:cucumber-report.xml"
+                    }
+                }
+            }
+        }
+
+        stage('Archive Reports') {
+            steps {
+                dir('/Users/musti/Desktop/testsWebUI/testsCucumberBDD/cucumber-playwright') {
+                    archiveArtifacts artifacts: 'cucumber-report.html,cucumber-report.xml,cucumber-report/**,report/**'
+                }
+            }
+        }
+
+        stage('Publish JUnit Report') {
+            steps {
+                dir('/Users/musti/Desktop/testsWebUI/testsCucumberBDD/cucumber-playwright') {
+                    junit 'cucumber-report.xml'
+                }
+            }
+        }
+
+        stage('Add Build Info to HTML Report') {
+            steps {
+                dir('/Users/musti/Desktop/testsWebUI/testsCucumberBDD/cucumber-playwright') {
+                    sh '''
+                        BUILD_INFO="Koşulan Jenkins Build Numarası: ${BUILD_NUMBER:-Local Çalıştırma}"
+                        sed -i '' "s|<body>|<body><div style='background:#ffe;border-bottom:1px solid #ccc;padding:8px;color:#333;font-weight:bold;'>$BUILD_INFO</div>|" cucumber-report/index.html
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline completed'
+        }
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
