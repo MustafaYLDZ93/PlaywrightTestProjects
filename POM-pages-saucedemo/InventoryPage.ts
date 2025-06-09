@@ -16,7 +16,7 @@ export class InventoryPage {
     }
 
     async getProductLabelText(): Promise<string> {
-        return this.page.textContent(this.productLabel);
+        return (await this.page.textContent(this.productLabel)) || '';
     }
 
     async clickBurgerButton() {
@@ -26,5 +26,42 @@ export class InventoryPage {
     async clickLogoutLink() {
         await this.page.waitForSelector(this.logoutLink, { state: 'visible' });
         await this.page.click(this.logoutLink);
+    }
+
+    async addToCart(productSelector: string) {
+        await this.page.click(productSelector);
+    }
+
+    get addToCartButtons() {
+        return this.page.locator('.btn_primary');
+    }
+
+    async addToCartByIndex({ index }: { index: number; }) {
+        const buttonsCount = await this.addToCartButtons.count();
+        if (index < 0 || index >= buttonsCount) {
+            throw new Error(`Invalid index: ${index}. There are only ${buttonsCount} items.`);
+        }
+        await this.addToCartButtons.nth(index).click();
+    }
+
+    async getCartCount(): Promise<number> {
+        const badge = this.page.locator('.shopping_cart_badge');
+        if (await badge.isVisible()) {
+            return parseInt(await badge.textContent() || '0', 10);
+        }
+        return 0;
+    }
+
+    async logout() {
+        await this.clickBurgerButton();
+        await this.clickLogoutLink();
+    }
+
+    getPage() {
+        return this.page;
+    }
+
+    async isLoaded() {
+        await this.waitForPageLoad();
     }
 }

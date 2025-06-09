@@ -4,14 +4,18 @@ import { loginSelectors } from '../fixtures-Saucedemo/selectors';
 
 
 export class LoginPage {
-    page: Page;
-    private usernameInput = loginSelectors.usernameInputSelector;
-    private passwordInput = loginSelectors.passwordInputSelector;
-    private loginButton = loginSelectors.LoginButton;
-    private errorMessage = loginSelectors.errorMessageSelector;
+    readonly page: Page;
+    readonly usernameInput = loginSelectors.usernameInputSelector;
+    readonly passwordInput = loginSelectors.passwordInputSelector;
+    readonly loginButton = loginSelectors.LoginButton;
+    readonly errorMessage = loginSelectors.errorMessageSelector;
 
     constructor(page: Page) {
         this.page = page;
+    }
+
+    async goto() {
+        await this.page.goto('https://www.saucedemo.com/');
     }
 
     async enterUsername(username: string) {
@@ -22,6 +26,12 @@ export class LoginPage {
         await this.page.fill(this.passwordInput, password);
     }
 
+    async login(username: string, password: string) {
+        await this.enterUsername(username);
+        await this.enterPassword(password);
+        await this.clickLoginButton();
+    }
+
     async clickLoginButton() {
         await this.page.click(this.loginButton);
     }
@@ -29,7 +39,7 @@ export class LoginPage {
         await this.page.waitForSelector(this.errorMessage, { state: 'visible' });
     }
 
-    async getErrorMessage(): Promise<string> {
+    async getErrorMessage() {
         return this.page.textContent(this.errorMessage);
     }
 }
